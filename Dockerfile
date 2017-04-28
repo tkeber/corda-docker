@@ -31,9 +31,6 @@ RUN mkdir -p /opt/corda/logs
 RUN mkdir -p /opt/corda/plugins
 RUN ln -s /opt/corda/logs /var/log/corda
 
-# Copy node config
-COPY node.conf /opt/corda
-
 # Copy corda jar (for now use local dir rather then remote location)
 ADD https://dl.bintray.com/r3/corda/net/corda/corda/0.9.2/corda-0.9.2.jar /opt/corda/corda.jar
 #COPY corda.jar /opt/corda/
