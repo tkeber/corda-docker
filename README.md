@@ -6,7 +6,7 @@ Docker configuration and scripts for Corda
 example
 ```
 docker build -t cordaDocker .
-docker docker create --env CORDA_CITY=Wroclaw --env CORDA_LAGAL_NAME="Very important node" --name corda1 -t cordaDocker
+docker create --env CORDA_CITY=Wroclaw --env CORDA_LAGAL_NAME="Very important node" --name corda1 -t cordaDocker
 docker start corda1
 docker exec -t -i corda bash
 ```
