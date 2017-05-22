@@ -1,14 +1,14 @@
 # corda-docker
-Docker configuration and scripts to create a Corda image. This  docker image based on (https://github.com/phusion/baseimage-docker)[Phosion based image], a Docker optmise Ubuntu 16.04 LTS.
+Docker configuration and scripts to create a Corda image. This docker image base on [Phosion based image](https://github.com/phusion/baseimage-docker) - Docker optmise Ubuntu 16.04 LTS.
 
 
 ## Usage
 
 * Check Dockerfile (e.g. to adjust version or Expose ports)
-* Create base Corda image `docker build -t corda:m11 .`
-* Create configured container (the full of all environment variable below) `docker create --env CORDA_CITY=Wroclaw --env CORDA_COUNTRY=Poland --env CORDA_LEGAL_NAME="Very important node" --name corda11 -t corda:m11`
-* Start container `docker start corda11`
-* Log into container `docker exec -t -i corda11 bash`
+* Create base Corda image: `docker build -t corda:m11 .`
+* Create configured container: `docker create --env CORDA_CITY=Wroclaw --env CORDA_COUNTRY=Poland --env CORDA_LEGAL_NAME="Very important node" --name corda11 -t corda:m11`
+* Start container: `docker start corda11`
+* Log into container: `docker exec -t -i corda11 bash`
 
 
 ## Node configuratio
