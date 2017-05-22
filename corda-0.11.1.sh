@@ -4,19 +4,24 @@
 # If you omit that part, the command will be run as root.
 
 export CORDA_HOST="${CORDA_HOST-localhost}"
-export CORDA_PORT="${CORDA_PORT-10002}"
-export CORDA_CITY="${CORDA_CITY-London}"
+export CORDA_PORT_P2P="${CORDA_PORT-10002}"
+export CORDA_PORT_RPC="${CORDA_PORT-10003}"
 export CORDA_LEGAL_NAME="${CORDA_LEGAL_NAME-Corda Test Node}"
+export CORDA_ORG="${CORDA_ORG-CordaTest}"
+export CORDA_ORG_UNIT="${CORDA_ORG_UNIT-CordaTest}"
+export CORDA_COUNTRY="${CORDA_COUNTRY}-UK"
+export CORDA_CITY="${CORDA_CITY-London}"
 export CORDA_EMAIL="${CORDA_EMAIL-admin@corda.test}"
 
 cd /opt/corda
 
 cat > node.conf << EOF
 basedir : "/opt/corda"
-artemisAddress : "$CORDA_HOST:$CORDA_PORT"
+p2pAddress : "$CORDA_HOST:$CORDA_PORT_P2P"
+rpcAddress : "$CORDA_HOST:$CORDA_PORT_RPC"
 h2port : 11000
 nearestCity : "$CORDA_CITY"
-myLegalName : "$CORDA_LEGAL_NAME"
+myLegalName : "CN=$CORDA_LEGAL_NAME,O=$CORDA_ORG,OU=$CORDA_ORG_UNIT,L=$CORDA_CITY,C=$CORDA_COUNTRY"
 emailAddress : "$CORDA_EMAIL"
 keyStorePassword : "cordacadevpass"
 trustStorePassword : "trustpass"
