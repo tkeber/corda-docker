@@ -12,7 +12,7 @@ export CORDA_ORG_UNIT="${CORDA_ORG_UNIT-CordaTest}"
 export CORDA_COUNTRY="${CORDA_COUNTRY}-UK"
 export CORDA_CITY="${CORDA_CITY-London}"
 export CORDA_EMAIL="${CORDA_EMAIL-admin@corda.test}"
-
+export JAVA_OPTIONS="${JAVA_OPTIONS--Xmx512m}"
 cd /opt/corda
 
 cat > node.conf << EOF
@@ -41,5 +41,5 @@ rpcUsers=[
 ]
 EOF
 
-exec java -jar /opt/corda/corda.jar >>/opt/corda/logs/output.log 2>&1
+exec java $JAVA_OPTIONS -jar /opt/corda/corda.jar >>/opt/corda/logs/output.log 2>&1
 
