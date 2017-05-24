@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# `/sbin/setuser memcache` runs the given command as the user `memcache`.
-# If you omit that part, the command will be run as root.
-
 export CORDA_HOST="${CORDA_HOST-localhost}"
 export CORDA_PORT_P2P="${CORDA_PORT-10002}"
 export CORDA_PORT_RPC="${CORDA_PORT-10003}"
@@ -14,6 +11,7 @@ export CORDA_CITY="${CORDA_CITY-London}"
 export CORDA_EMAIL="${CORDA_EMAIL-admin@corda.test}"
 export JAVA_OPTIONS="${JAVA_OPTIONS--Xmx512m}"
 export JAVA_CAPSULE="${JAVA_CAPSULE-''}"
+
 cd /opt/corda
 
 cat > node.conf << EOF
