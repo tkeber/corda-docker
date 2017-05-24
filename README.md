@@ -29,9 +29,12 @@ CORDA_COUNTRY | country for myLegalName | UK
 CORDA_CITY | City for myLegalName and nearestCity | London 
 CORDA_EMAIL | emailAddress | admin@corda.test 
 JAVA_OPTIONS | option for JVM | -Xmx512m
+JAVA_CAPSULE | option passed to capsule | '' (empty string)
 
 ### Java Options
 
-With docker environment you can not only control Corda node set up but also pass Java specific variable. The default option is to start Corda with 512 MB heap memory (`-Xmx512m`). For example following incantation enables JMX (assuming that you called Docker image _corda11_:
+With docker environment you can not only control Corda node set up but also pass Java specific variables. There are Docker variables controling Java behaviour. The first one - **JAVA_OPTIONS** passes options for JVM. The default option is to start Corda with 512 MB heap memory (`-Xmx512m`). If you need to pass variable to inside Corda capsule, use **JAVA_CAPSULE**.
 
-```docker create --env JAVA_OPTIONS='-Xmx512m -Dcapsule.jvm.args="-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=9002 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false"' -t corda:m11 -n jmx```
+For example following incantation enables JMX (assuming that you called Docker image _corda11_):
+
+```docker create --env JAVA_CAPSULE="-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=9002 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false" -t corda:m11 -n jmx```
