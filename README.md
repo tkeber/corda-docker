@@ -1,5 +1,5 @@
 # corda-docker
-Docker configuration and scripts to create a Corda image. This docker image base on [Phosion based image](https://github.com/phusion/baseimage-docker) - Docker optmise Ubuntu 16.04 LTS.
+Docker configuration and scripts to create a Corda image. This docker image base on [Phusion based image](https://github.com/phusion/baseimage-docker) - Docker optmise Ubuntu 16.04 LTS.
 
 
 ## Usage
