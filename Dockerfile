@@ -2,10 +2,11 @@
 FROM phusion/baseimage:0.9.20
 
 # Set up Version
-ENV version=0.12.1
+ENV version=0.13.0
+
 
 # Set image labels
-LABEL net.corda.version="${version}"
+LABEL net.corda.version=${version}
 LABEL vendor="R3"
 MAINTAINER Wawrzyniec 'Wawrzek' Niewodniczanski <wawrzek@r3.com>
 
