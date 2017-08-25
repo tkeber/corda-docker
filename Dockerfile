@@ -1,8 +1,8 @@
 # Base image from (http://phusion.github.io/baseimage-docker)
-FROM phusion/baseimage:0.9.20
+FROM phusion/baseimage:0.9.22
 
 # Set up Version
-ENV version=0.13.0
+ENV version=0.14.0
 
 
 # Set image labels
