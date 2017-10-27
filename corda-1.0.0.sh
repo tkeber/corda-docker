@@ -19,7 +19,7 @@ basedir : "/opt/corda"
 p2pAddress : "$CORDA_HOST:$CORDA_PORT_P2P"
 rpcAddress : "$CORDA_HOST:$CORDA_PORT_RPC"
 h2port : 11000
-myLegalName : "CN=$CORDA_LEGAL_NAME,O=$CORDA_ORG,OU=$CORDA_ORG_UNIT,L=$CORDA_CITY,C=$CORDA_COUNTRY, E=$CORDA_EMAIL"
+myLegalName : “O=${ORGANISATION}, L=${CITY}, C=${COUNTRY}”
 keyStorePassword : "cordacadevpass"
 trustStorePassword : "trustpass"
 extraAdvertisedServiceIds: [ "" ]
@@ -28,7 +28,7 @@ devMode : true
 rpcUsers=[
     {
         user=corda
-        password=not_blockchain
+        password=corda_initial_password
         permissions=[
             StartFlow.net.corda.flows.CashIssueFlow,
             StartFlow.net.corda.flows.CashExitFlow,
