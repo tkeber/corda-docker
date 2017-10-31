@@ -1,18 +1,18 @@
 # corda-docker
-Docker configuration and scripts to create a Corda image. This docker image base on [Phusion based image](https://github.com/phusion/baseimage-docker) - Docker optimise Ubuntu 16.04 LTS.
+Docker configuration and scripts to create a Corda image. This docker image is based on [Phusion's base-image](https://github.com/phusion/baseimage-docker) - Docker optimised Ubuntu 16.04 LTS.
 
 
 ## Usage
 
 * Check Dockerfile (e.g. to adjust version or Expose ports)
 * `docker build -t corda:1.0 . ` - to create base Corda image (called _corda:1.0_)
-* `docker create --env CORDA_CITY=Wroclaw --env CORDA_COUNTRY=Poland --env CORDA_LEGAL_NAME="Very important node" --name corda1.0 -t corda:1.0` - to create configured container based on above (_corda:1.0_) image and called _corda1.0_
+* `docker create --env CORDA_CITY=Wroclaw --env CORDA_COUNTRY=PL --env CORDA_LEGAL_NAME="Very important node" --name corda1.0 -t corda:1.0` - to create configured container based on above (_corda:1.0_) image and called _corda1.0_
 * `docker start corda1.0` - to start the _corda1.0_ container
-* `docker exec -t -i corda1.0 bash` - to login into the container
+* `docker exec -t -i corda1.0 bash` - to log in to the container
 
 
 ## Node configuration
-Corda image can be 'personalize' with following environment variables as seen in an Usage example above. Table below list all available variables as well it's default value.
+Corda image can be configured with the following environment variables as seen in the Usage example above. Table below lists all available variables as well as default values.
 
 
 ### Environment Variables
@@ -34,7 +34,3 @@ JAVA_CAPSULE | option passed to capsule | '' (empty string)
 ### Java Options
 
 With docker environment you can not only control Corda node set up but also pass Java specific variables. There are Docker variables controlling Java behaviour. The first one - **JAVA_OPTIONS** passes options for JVM. The default option is to start Corda with 512 MB heap memory (`-Xmx512m`). If you need to pass variable to inside Corda capsule, use **JAVA_CAPSULE**.
-
-For example following incantation create container with JMX enabled, assuming that you called Docker image _corda:1.0_.
-
-```docker create --env JAVA_CAPSULE="-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=9002 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false" -t corda:1.0 -n jmx```
