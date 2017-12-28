@@ -2,7 +2,7 @@
 FROM phusion/baseimage:0.9.22
 
 # Set up Version
-ENV version=1.0.0
+ENV version=2.0.0
 
 # Set image labels
 LABEL net.corda.version=${version}
