@@ -2,7 +2,7 @@
 FROM phusion/baseimage:0.9.22
 
 # Set up Version
-ENV version=1.0.0
+ENV version=2.0.0
 
 # Set image labels
 LABEL net.corda.version=${version}
@@ -11,13 +11,11 @@ MAINTAINER <devops@r3.com>
 
 # Install OpenJDK from zulu.org and update system
 RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 0x219BD9C9 \
- && (echo "deb http://repos.azulsystems.com/ubuntu stable main" >> /etc/apt/sources.list.d/zulu.list)
-RUN apt-get -qq update \
- && apt-get -y upgrade -y -o Dpkg::Options::="--force-confold"
-RUN apt-get -qqy install zulu-8 ntp
-
-# Cleanup
-RUN apt-get clean \
+ && (echo "deb http://repos.azulsystems.com/ubuntu stable main" >> /etc/apt/sources.list.d/zulu.list) \
+ && apt-get -qq update \
+ && apt-get -y upgrade -y -o Dpkg::Options::="--force-confold" \
+ && apt-get -qqy install zulu-8 ntp \
+ && apt-get clean \
  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Add user corda
@@ -28,7 +26,7 @@ RUN groupadd corda \
 RUN mkdir -p /opt/corda/plugins && mkdir -p /opt/corda/logs
 
 # Copy corda jar
-ADD https://dl.bintray.com/r3/corda/net/corda/corda/$version/corda-$version.jar /opt/corda/corda.jar
+ADD --chown=corda:corda https://dl.bintray.com/r3/corda/net/corda/corda/$version/corda-$version.jar /opt/corda/corda.jar
 # (for now use local dir rather then remote location)
 #COPY corda-$version.jar /opt/corda/corda.jar
 
