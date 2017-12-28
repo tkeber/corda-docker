@@ -37,8 +37,9 @@ RUN chmod +x /etc/service/corda/run
 
 RUN chown -R corda:corda /opt/corda
 
-# Expose port for corda (default is 10002)
+# Expose port for corda (default is 10002) and RPC
 EXPOSE 10002
+EXPOSE 10003
 
 # Working directory for Corda
 WORKDIR /opt/corda
