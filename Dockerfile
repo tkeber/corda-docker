@@ -26,7 +26,7 @@ RUN groupadd corda \
 RUN mkdir -p /opt/corda/plugins && mkdir -p /opt/corda/logs
 
 # Copy corda jar
-ADD https://dl.bintray.com/r3/corda/net/corda/corda/$version/corda-$version.jar /opt/corda/corda.jar
+ADD --chown=corda:corda https://dl.bintray.com/r3/corda/net/corda/corda/$version/corda-$version.jar /opt/corda/corda.jar
 # (for now use local dir rather then remote location)
 #COPY corda-$version.jar /opt/corda/corda.jar
 
