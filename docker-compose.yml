@@ -1,0 +1,37 @@
+version: '3.3'
+services:
+  CordaNodeA:
+    networks:
+      - corda
+    build:
+      context: .
+      args:
+        buildtime_corda_version: 2.0.0
+        buildtime_corda_type: corda-node
+    ports:
+      - "10002:10002"
+      - "10003:10003"
+    image: corda/node:2.0
+    container_name: node
+    volumes:
+      - ./files/corda-node.conf:/opt/corda/node.conf
+      - ./plugins/:/opt/corda/plugins/
+      - ./certificates/:/opt/corda/certificates/
+    depends_on:
+      - CordaNetworkMap
+
+  CordaNetworkMap:
+    networks:
+      - corda
+    build:
+      context: .
+      args:
+        buildtime_corda_version: 2.0.0
+        buildtime_corda_type: corda-networkmap
+    image: corda/networkmap:2.0
+    container_name: networkmap
+    volumes:
+      - ./files/corda-networkmap.conf:/opt/corda/node.conf
+
+networks:
+  corda:
