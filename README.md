@@ -17,3 +17,6 @@ If you need to modify Corda parameters (node or/and networkmap) change their con
 ### For Networkmap node:
 * modify `files/corda-networkmap.conf`
 * restart Corda networkmap: `docker restart networkmap`
+
+## TODO
+* add more to README.md (how to customise the build, potential manual spin up without docker compose) 
