@@ -20,3 +20,4 @@ If you need to modify Corda parameters (node or/and networkmap) change their con
 
 ## TODO
 * add more to README.md (how to customise the build, potential manual spin up without docker compose) 
+* spin up additional Corda node to test communication/CordApps between nodes
