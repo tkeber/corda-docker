@@ -1,5 +1,6 @@
 # corda-docker
-Docker configuration and files to create and spin up Docker images for Corda Node and Networkmap. The docker image is based on Alpine/OpenJDK (https://hub.docker.com/_/openjdk/)
+Docker configuration and files to create and spin up Docker images for two Corda Nodes, Networkmap and Notary.
+The docker image is based on Alpine/OpenJDK (https://hub.docker.com/_/openjdk/)
 
 ## Usage (automatic way - using docker compose)
 
@@ -21,3 +22,7 @@ If you need to modify Corda parameters (node or/and networkmap) change their con
 ## TODO
 * add more to README.md (how to customise the build, potential manual spin up without docker compose) 
 * spin up additional Corda node to test communication/CordApps between nodes
+* add notary node
+* let customise java options
+* add webserver
+* add example CordApp(s)
