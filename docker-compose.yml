@@ -11,9 +11,28 @@ services:
       - "10002:10002"
       - "10003:10003"
     image: corda/node:2.0
-    container_name: node
+    container_name: banka
     volumes:
-      - ./files/corda-node.conf:/opt/corda/node.conf
+      - ./files/corda-banka.conf:/opt/corda/node.conf
+      - ./plugins/:/opt/corda/plugins/
+      - ./certificates/:/opt/corda/certificates/
+    depends_on:
+      - CordaNetworkMap
+
+  CordaNodeB:
+    networks:
+      - corda
+    build:
+      context: .
+      args:
+        buildtime_corda_version: 2.0.0
+    ports:
+      - "10012:10002"
+      - "10013:10003"
+    image: corda/node:2.0
+    container_name: bankb
+    volumes:
+      - ./files/corda-bankb.conf:/opt/corda/node.conf
       - ./plugins/:/opt/corda/plugins/
       - ./certificates/:/opt/corda/certificates/
     depends_on:
@@ -26,10 +45,30 @@ services:
       context: .
       args:
         buildtime_corda_version: 2.0.0
+    ports:
+      - "10022:10002"
+      - "10023:10003"
     image: corda/networkmap:2.0
     container_name: networkmap
     volumes:
       - ./files/corda-networkmap.conf:/opt/corda/node.conf
+
+  Notary:
+    networks:
+      - corda
+    build:
+      context: .
+      args:
+        buildtime_corda_version: 2.0.0
+    ports:
+      - "10032:10002"
+      - "10033:10003"
+    image: corda/node:2.0
+    container_name: notary
+    volumes:
+      - ./files/corda-notary.conf:/opt/corda/node.conf
+      - ./plugins/:/opt/corda/plugins/
+      - ./certificates/:/opt/corda/certificates/
 
 networks:
   corda:
