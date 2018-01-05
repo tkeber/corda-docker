@@ -25,7 +25,8 @@ RUN mkdir -p /opt/corda/plugins && \
     mkdir -p /opt/corda/logs
 
 # Copy corda jar
-ADD --chown=corda:corda https://dl.bintray.com/r3/corda/net/corda/corda/${corda_version}/corda-${corda_version}.jar /opt/corda/corda.jar
+ADD --chown=corda:corda https://dl.bintray.com/r3/corda/net/corda/corda/${corda_version}/corda-${corda_version}.jar						/opt/corda/corda.jar
+ADD --chown=corda:corda https://dl.bintray.com/r3/corda/net/corda/corda-webserver/${corda_version}/corda-webserver-${corda_version}.jar	/opt/corda/corda-webserver.jar
 
 COPY files/run-corda.sh /run-corda.sh
 RUN chmod +x /run-corda.sh && sync
