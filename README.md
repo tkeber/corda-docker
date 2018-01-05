@@ -19,10 +19,12 @@ If you need to modify Corda parameters (node or/and networkmap) change their con
 * modify `files/corda-networkmap.conf`
 * restart Corda networkmap: `docker restart networkmap`
 
+## Show installed CordApps
+In your web browser open:
+* `http://localhost:10024` (for banka)
+* `http://localhost:10034` (for bankb)
+etc
+
 ## TODO
 * add more to README.md (how to customise the build, potential manual spin up without docker compose) 
-* spin up additional Corda node to test communication/CordApps between nodes
-* add notary node
 * let customise java options
-* add webserver
-* add example CordApp(s)
