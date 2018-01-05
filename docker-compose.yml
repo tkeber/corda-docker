@@ -1,6 +1,7 @@
 version: '3.3'
 services:
-  CordaNodeA:
+
+  Notary:
     networks:
       - corda
     build:
@@ -10,6 +11,39 @@ services:
     ports:
       - "10002:10002"
       - "10003:10003"
+    image: corda/node:2.0
+    container_name: notary
+    volumes:
+      - ./files/corda-notary.conf:/opt/corda/node.conf
+      - ./plugins/:/opt/corda/plugins/
+      - ./certificates/:/opt/corda/certificates/
+
+  CordaNetworkMap:
+    networks:
+      - corda
+    build:
+      context: .
+      args:
+        buildtime_corda_version: 2.0.0
+    ports:
+      - "10012:10002"
+      - "10013:10003"
+    image: corda/networkmap:2.0
+    container_name: networkmap
+    volumes:
+      - ./files/corda-networkmap.conf:/opt/corda/node.conf
+
+  CordaNodeA:
+    networks:
+      - corda
+    build:
+      context: .
+      args:
+        buildtime_corda_version: 2.0.0
+    ports:
+      - "10022:10002"
+      - "10023:10003"
+      - "10024:10004"
     image: corda/node:2.0
     container_name: banka
     volumes:
@@ -27,8 +61,9 @@ services:
       args:
         buildtime_corda_version: 2.0.0
     ports:
-      - "10012:10002"
-      - "10013:10003"
+      - "10032:10002"
+      - "10033:10003"
+      - "10034:10004"
     image: corda/node:2.0
     container_name: bankb
     volumes:
@@ -38,7 +73,7 @@ services:
     depends_on:
       - CordaNetworkMap
 
-  CordaNetworkMap:
+  CordaNodeC:
     networks:
       - corda
     build:
@@ -46,29 +81,17 @@ services:
       args:
         buildtime_corda_version: 2.0.0
     ports:
-      - "10022:10002"
-      - "10023:10003"
-    image: corda/networkmap:2.0
-    container_name: networkmap
-    volumes:
-      - ./files/corda-networkmap.conf:/opt/corda/node.conf
-
-  Notary:
-    networks:
-      - corda
-    build:
-      context: .
-      args:
-        buildtime_corda_version: 2.0.0
-    ports:
-      - "10032:10002"
-      - "10033:10003"
+      - "10042:10002"
+      - "10043:10003"
+      - "10044:10004"
     image: corda/node:2.0
-    container_name: notary
+    container_name: bankc
     volumes:
-      - ./files/corda-notary.conf:/opt/corda/node.conf
+      - ./files/corda-bankc.conf:/opt/corda/node.conf
       - ./plugins/:/opt/corda/plugins/
       - ./certificates/:/opt/corda/certificates/
+    depends_on:
+      - CordaNetworkMap
 
 networks:
   corda:
