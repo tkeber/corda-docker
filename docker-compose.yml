@@ -7,7 +7,10 @@ services:
     build:
       context: .
       args:
-        buildtime_corda_version: 2.0.0
+        BUILDTIME_CORDA_VERSION: 2.0.0
+        BUILDTIME_JAVA_OPTIONS: 2.0.0
+    env_file:
+      - ./corda_docker.env
     ports:
       - "10002:10002"
       - "10003:10003"
@@ -24,7 +27,9 @@ services:
     build:
       context: .
       args:
-        buildtime_corda_version: 2.0.0
+        BUILDTIME_CORDA_VERSION: 2.0.0
+    env_file:
+      - ./corda_docker.env
     ports:
       - "10012:10002"
       - "10013:10003"
@@ -39,7 +44,9 @@ services:
     build:
       context: .
       args:
-        buildtime_corda_version: 2.0.0
+        BUILDTIME_CORDA_VERSION: 2.0.0
+    env_file:
+      - ./corda_docker.env
     ports:
       - "10022:10002"
       - "10023:10003"
@@ -59,7 +66,9 @@ services:
     build:
       context: .
       args:
-        buildtime_corda_version: 2.0.0
+        BUILDTIME_CORDA_VERSION: 2.0.0
+    env_file:
+      - ./corda_docker.env
     ports:
       - "10032:10002"
       - "10033:10003"
@@ -79,7 +88,9 @@ services:
     build:
       context: .
       args:
-        buildtime_corda_version: 2.0.0
+        BUILDTIME_CORDA_VERSION: 2.0.0
+    env_file:
+      - ./corda_docker.env
     ports:
       - "10042:10002"
       - "10043:10003"

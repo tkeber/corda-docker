@@ -1,15 +1,18 @@
 # Base image from (http://phusion.github.io/baseimage-docker)
 FROM openjdk:8u151-jre-alpine
 
-# Override default value with 'docker build --build-arg buildtime_corda_version=version'
-# example: 'docker build --build-arg buildtime_corda_version=1.0.0 -t corda/node:1.0 .'
-ARG buildtime_corda_version=2.0.0
+# Override default value with 'docker build --build-arg BUILDTIME_CORDA_VERSION=version'
+# example: 'docker build --build-arg BUILDTIME_CORDA_VERSION=1.0.0 -t corda/node:1.0 .'
+ARG BUILDTIME_CORDA_VERSION=2.0.0
+ARG BUILDTIME_JAVA_OPTIONS
 
-ENV corda_version=${buildtime_corda_version}
+ENV CORDA_VERSION=${BUILDTIME_CORDA_VERSION}
+ENV JAVA_OPTIONS=${BUILDTIME_JAVA_OPTIONS}
+
 MAINTAINER <devops@r3.com>
 
 # Set image labels
-LABEL net.corda.version = ${corda_version}
+LABEL net.corda.version = ${CORDA_VERSION}
 LABEL vendor = "R3"
 
 RUN apk upgrade --update && \
@@ -25,8 +28,8 @@ RUN mkdir -p /opt/corda/plugins && \
     mkdir -p /opt/corda/logs
 
 # Copy corda jar
-ADD --chown=corda:corda https://dl.bintray.com/r3/corda/net/corda/corda/${corda_version}/corda-${corda_version}.jar						/opt/corda/corda.jar
-ADD --chown=corda:corda https://dl.bintray.com/r3/corda/net/corda/corda-webserver/${corda_version}/corda-webserver-${corda_version}.jar	/opt/corda/corda-webserver.jar
+ADD --chown=corda:corda https://dl.bintray.com/r3/corda/net/corda/corda/${CORDA_VERSION}/corda-${CORDA_VERSION}.jar						/opt/corda/corda.jar
+ADD --chown=corda:corda https://dl.bintray.com/r3/corda/net/corda/corda-webserver/${CORDA_VERSION}/corda-webserver-${CORDA_VERSION}.jar	/opt/corda/corda-webserver.jar
 
 COPY files/run-corda.sh /run-corda.sh
 RUN chmod +x /run-corda.sh && sync
