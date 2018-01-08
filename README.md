@@ -1,11 +1,10 @@
 # Corda on Docker
 
-**Dockerfile features requires Docker 17.09 and up.**
+**Docker 17.09 and up is required for this Dockerfile.**
 
 Docker configuration files to create and spin up Docker images for a few Corda Nodes (banka/bankb/bankc), Networkmap, Notary and one CordApp.
 
 The docker image is based on Alpine/OpenJDK (https://hub.docker.com/_/openjdk/)
-
 
 ## Usage (automatic way - using docker compose)
 
