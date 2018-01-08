@@ -3,6 +3,8 @@ Docker configuration files to create and spin up Docker images for a few Corda N
 
 The docker image is based on Alpine/OpenJDK (https://hub.docker.com/_/openjdk/)
 
+**Dockerfile features requires Docker 17.09 and up.**
+
 ## Usage (automatic way - using docker compose)
 
 * Check Dockerfile and docker-compose.yml (e.g. to adjust version or exposed ports)
