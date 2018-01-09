@@ -9,22 +9,19 @@ ARG BUILDTIME_JAVA_OPTIONS
 ENV CORDA_VERSION=${BUILDTIME_CORDA_VERSION}
 ENV JAVA_OPTIONS=${BUILDTIME_JAVA_OPTIONS}
 
-MAINTAINER <devops@r3.com>
-
 # Set image labels
-LABEL net.corda.version = ${CORDA_VERSION}
-LABEL vendor = "R3"
+LABEL net.corda.version = ${CORDA_VERSION} \
+      maintainer = "<devops@r3.com>" \
+      vendor = "R3"
 
 RUN apk upgrade --update && \
 	apk add --update --no-cache bash iputils && \
-	rm -rf /var/cache/apk/*
-
-# Add user to run the app
-RUN addgroup corda && \
-    adduser -G corda -D -s /bin/bash corda
-
-# Create /opt/corda directory
-RUN mkdir -p /opt/corda/plugins && \
+	rm -rf /var/cache/apk/* && \
+	# Add user to run the app && \
+	addgroup corda && \
+    adduser -G corda -D -s /bin/bash corda && \
+	# Create /opt/corda directory && \
+	mkdir -p /opt/corda/plugins && \
     mkdir -p /opt/corda/logs
 
 # Copy corda jar
@@ -32,13 +29,14 @@ ADD --chown=corda:corda https://dl.bintray.com/r3/corda/net/corda/corda/${CORDA_
 ADD --chown=corda:corda https://dl.bintray.com/r3/corda/net/corda/corda-webserver/${CORDA_VERSION}/corda-webserver-${CORDA_VERSION}.jar	/opt/corda/corda-webserver.jar
 
 COPY files/run-corda.sh /run-corda.sh
-RUN chmod +x /run-corda.sh && sync
-
-RUN chown -R corda:corda /opt/corda
+RUN chmod +x /run-corda.sh && \
+	sync && \
+	chown -R corda:corda /opt/corda
 
 # Expose port for corda (default is 10002) and RPC
 EXPOSE 10002
 EXPOSE 10003
+EXPOSE 10004
 
 # Working directory for Corda
 WORKDIR /opt/corda
