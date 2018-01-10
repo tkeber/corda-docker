@@ -34,7 +34,9 @@ etc
 
 ## Issues
 If you get the following message: `<containername> exited with code 137` it's likely because the Linux OOM killer is getting triggered.
-Allocating more RAM to Docker should solve it (Docker App > Preferences > Advanced).
+Allocating more RAM to Docker should solve it:
+On MacOS: https://docs.docker.com/docker-for-mac/#memory
+On Windows: https://docs.docker.com/docker-for-windows/#advanced
 
 ## TODO
 * add more to README.md (how to customise the build, potential manual spin up without docker compose) 
