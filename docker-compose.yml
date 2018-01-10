@@ -14,6 +14,7 @@ services:
     ports:
       - "10002:10002"
       - "10003:10003"
+      - "10004:10004"
     image: corda/node:2.0
     container_name: notary
     volumes:
@@ -33,6 +34,7 @@ services:
     ports:
       - "10012:10002"
       - "10013:10003"
+      - "10014:10004"
     image: corda/networkmap:2.0
     container_name: networkmap
     volumes:
