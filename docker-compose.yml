@@ -8,7 +8,6 @@ services:
       context: .
       args:
         BUILDTIME_CORDA_VERSION: 2.0.0
-        BUILDTIME_JAVA_OPTIONS: 2.0.0
     env_file:
       - ./corda_docker.env
     ports:
@@ -18,9 +17,9 @@ services:
     image: corda/node:2.0
     container_name: notary
     volumes:
-      - ./files/corda-notary.conf:/opt/corda/node.conf
+      - ./nodes/notary/corda-notary.conf:/opt/corda/node.conf
       - ./plugins/:/opt/corda/plugins/
-      - ./certificates/:/opt/corda/certificates/
+      - ./nodes/notary/certificates/:/opt/corda/certificates/
 
   CordaNetworkMap:
     networks:
@@ -38,7 +37,7 @@ services:
     image: corda/networkmap:2.0
     container_name: networkmap
     volumes:
-      - ./files/corda-networkmap.conf:/opt/corda/node.conf
+      - ./nodes/networkmap/corda-networkmap.conf:/opt/corda/node.conf
 
   CordaNodeA:
     networks:
@@ -56,9 +55,9 @@ services:
     image: corda/node:2.0
     container_name: banka
     volumes:
-      - ./files/corda-banka.conf:/opt/corda/node.conf
+      - ./nodes/banka/corda-banka.conf:/opt/corda/node.conf
       - ./plugins/:/opt/corda/plugins/
-      - ./certificates/:/opt/corda/certificates/
+      - ./nodes/banka/certificates/:/opt/corda/certificates/
     depends_on:
       - CordaNetworkMap
 
@@ -78,9 +77,9 @@ services:
     image: corda/node:2.0
     container_name: bankb
     volumes:
-      - ./files/corda-bankb.conf:/opt/corda/node.conf
+      - ./nodes/bankb/corda-bankb.conf:/opt/corda/node.conf
       - ./plugins/:/opt/corda/plugins/
-      - ./certificates/:/opt/corda/certificates/
+      - ./nodes/bankb/certificates/:/opt/corda/certificates/
     depends_on:
       - CordaNetworkMap
 
@@ -100,9 +99,9 @@ services:
     image: corda/node:2.0
     container_name: bankc
     volumes:
-      - ./files/corda-bankc.conf:/opt/corda/node.conf
+      - ./nodes/bankc/corda-bankc.conf:/opt/corda/node.conf
       - ./plugins/:/opt/corda/plugins/
-      - ./certificates/:/opt/corda/certificates/
+      - ./nodes/bankc/certificates/:/opt/corda/certificates/
     depends_on:
       - CordaNetworkMap
 
