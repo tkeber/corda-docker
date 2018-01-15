@@ -15,23 +15,23 @@ LABEL net.corda.version = ${CORDA_VERSION} \
       vendor = "R3"
 
 RUN apk upgrade --update && \
-	apk add --update --no-cache bash iputils && \
-	rm -rf /var/cache/apk/* && \
-	# Add user to run the app && \
-	addgroup corda && \
+    apk add --update --no-cache bash iputils && \
+    rm -rf /var/cache/apk/* && \
+    # Add user to run the app && \
+    addgroup corda && \
     adduser -G corda -D -s /bin/bash corda && \
-	# Create /opt/corda directory && \
-	mkdir -p /opt/corda/plugins && \
+    # Create /opt/corda directory && \
+    mkdir -p /opt/corda/plugins && \
     mkdir -p /opt/corda/logs
 
 # Copy corda jar
-ADD --chown=corda:corda https://dl.bintray.com/r3/corda/net/corda/corda/${CORDA_VERSION}/corda-${CORDA_VERSION}.jar						/opt/corda/corda.jar
-ADD --chown=corda:corda https://dl.bintray.com/r3/corda/net/corda/corda-webserver/${CORDA_VERSION}/corda-webserver-${CORDA_VERSION}.jar	/opt/corda/corda-webserver.jar
+ADD --chown=corda:corda https://dl.bintray.com/r3/corda/net/corda/corda/${CORDA_VERSION}/corda-${CORDA_VERSION}.jar                       /opt/corda/corda.jar
+ADD --chown=corda:corda https://dl.bintray.com/r3/corda/net/corda/corda-webserver/${CORDA_VERSION}/corda-webserver-${CORDA_VERSION}.jar   /opt/corda/corda-webserver.jar
 
 COPY run-corda.sh /run-corda.sh
 RUN chmod +x /run-corda.sh && \
-	sync && \
-	chown -R corda:corda /opt/corda
+    sync && \
+    chown -R corda:corda /opt/corda
 
 # Expose port for corda (default is 10002) and RPC
 EXPOSE 10002
