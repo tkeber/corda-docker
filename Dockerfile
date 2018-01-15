@@ -1,48 +1,47 @@
 # Base image from (http://phusion.github.io/baseimage-docker)
-FROM phusion/baseimage:0.9.22
+FROM openjdk:8u151-jre-alpine
 
-# Set up Version
-ENV version=2.0.0
+# Override default value with 'docker build --build-arg BUILDTIME_CORDA_VERSION=version'
+# example: 'docker build --build-arg BUILDTIME_CORDA_VERSION=1.0.0 -t corda/node:1.0 .'
+ARG BUILDTIME_CORDA_VERSION=2.0.0
+ARG BUILDTIME_JAVA_OPTIONS
+
+ENV CORDA_VERSION=${BUILDTIME_CORDA_VERSION}
+ENV JAVA_OPTIONS=${BUILDTIME_JAVA_OPTIONS}
 
 # Set image labels
-LABEL net.corda.version=${version}
-LABEL vendor="R3"
-MAINTAINER <devops@r3.com>
+LABEL net.corda.version = ${CORDA_VERSION} \
+      maintainer = "<devops@r3.com>" \
+      vendor = "R3"
 
-# Install OpenJDK from zulu.org and update system
-RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 0x219BD9C9 \
- && (echo "deb http://repos.azulsystems.com/ubuntu stable main" >> /etc/apt/sources.list.d/zulu.list) \
- && apt-get -qq update \
- && apt-get -y upgrade -y -o Dpkg::Options::="--force-confold" \
- && apt-get -qqy install zulu-8 ntp \
- && apt-get clean \
- && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
-# Add user corda
-RUN groupadd corda \
- && useradd -c "Corda user" -g corda -m -s /bin/bash corda
-
-# Create /opt/corda directory
-RUN mkdir -p /opt/corda/plugins && mkdir -p /opt/corda/logs
+RUN apk upgrade --update && \
+    apk add --update --no-cache bash iputils && \
+    rm -rf /var/cache/apk/* && \
+    # Add user to run the app && \
+    addgroup corda && \
+    adduser -G corda -D -s /bin/bash corda && \
+    # Create /opt/corda directory && \
+    mkdir -p /opt/corda/plugins && \
+    mkdir -p /opt/corda/logs
 
 # Copy corda jar
-ADD --chown=corda:corda https://dl.bintray.com/r3/corda/net/corda/corda/$version/corda-$version.jar /opt/corda/corda.jar
-# (for now use local dir rather then remote location)
-#COPY corda-$version.jar /opt/corda/corda.jar
+ADD --chown=corda:corda https://dl.bintray.com/r3/corda/net/corda/corda/${CORDA_VERSION}/corda-${CORDA_VERSION}.jar                       /opt/corda/corda.jar
+ADD --chown=corda:corda https://dl.bintray.com/r3/corda/net/corda/corda-webserver/${CORDA_VERSION}/corda-webserver-${CORDA_VERSION}.jar   /opt/corda/corda-webserver.jar
 
-### Init script for corda
-RUN mkdir /etc/service/corda
-COPY corda-$version.sh /etc/service/corda/run
-RUN chmod +x /etc/service/corda/run
+COPY run-corda.sh /run-corda.sh
+RUN chmod +x /run-corda.sh && \
+    sync && \
+    chown -R corda:corda /opt/corda
 
-RUN chown -R corda:corda /opt/corda
-
-# Expose port for corda (default is 10002)
+# Expose port for corda (default is 10002) and RPC
 EXPOSE 10002
+EXPOSE 10003
+EXPOSE 10004
 
 # Working directory for Corda
 WORKDIR /opt/corda
 ENV HOME=/opt/corda
+USER corda
 
-# Start runit
-CMD ["/sbin/my_init"]
+# Start it
+CMD ["/run-corda.sh"]
