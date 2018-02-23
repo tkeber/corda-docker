@@ -26,7 +26,7 @@ RUN apk upgrade --update && \
 
 # Copy corda jar
 ADD --chown=corda:corda https://dl.bintray.com/r3/corda/net/corda/corda/${CORDA_VERSION}/corda-${CORDA_VERSION}.jar                       /opt/corda/corda.jar
-ADD --chown=corda:corda https://dl.bintray.com/r3/corda/net/corda/corda-webserver/${CORDA_VERSION}/corda-webserver-${CORDA_VERSION}.jar   /opt/corda/corda-webserver.jar
+# ADD --chown=corda:corda https://dl.bintray.com/r3/corda/net/corda/corda-webserver/${CORDA_VERSION}/corda-webserver-${CORDA_VERSION}.jar   /opt/corda/corda-webserver.jar
 
 COPY run-corda.sh /run-corda.sh
 RUN chmod +x /run-corda.sh && \
@@ -36,7 +36,7 @@ RUN chmod +x /run-corda.sh && \
 # Expose port for corda (default is 10002) and RPC
 EXPOSE 10002
 EXPOSE 10003
-EXPOSE 10004
+# EXPOSE 10004
 
 # Working directory for Corda
 WORKDIR /opt/corda
