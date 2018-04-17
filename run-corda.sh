@@ -8,4 +8,4 @@ export CORDA_HOME JAVA_OPTIONS
 
 cd ${CORDA_HOME}
 # java $JAVA_OPTIONS -jar ${CORDA_HOME}/corda-webserver.jar 2>&1 &
-java $JAVA_OPTIONS -jar ${CORDA_HOME}/corda.jar 2>&1
+java $JAVA_OPTIONS -jar ${CORDA_HOME}/corda.jar --log-to-console 2>&1
